@@ -1,0 +1,107 @@
+# 001 Account Creation
+
+email = olegzaitsevqa@gmail.com
+firstName = Oleg
+lastName = Zaitsev
+password = Qwerty123
+dateOfBirth = 26.08.1993
+
+Steps:
+1. Open Homepage
+2. Click "My Profile" icon
+3. Enter valid email into the "Email" field in the "Sign In" pop-up
+4. Click the "Continue" button in the "Sign In" pop-up
+5. Enter the firstName into the "First Name" field in the "Create Account" pop-up
+6. Select the dateOfBirth in the "Date of Birth" field in the "Create Account" pop-up
+7. Enter the password into the "Password" field in the "Create Account" pop-up
+8. Enter the password into the "Confirm Password" field in the "Create Account" pop-up
+9. Check the "Terms & Conditions" checkbox in the "Create Account" pop-up
+10. Click the "Create Account" button in the "Create Account" pop-up
+
+Expected result:
+1. I see the "Orders" button
+2. I see the "Log out" button
+3. I see the "Hi + firstName" message
+
+PostConditions:
+1. Log out
+
+# 002 Change Account Password
+
+Preconditions:
+1. Log in
+
+Steps:
+1. Click on the "Account Information" menu item
+2. Click the "Change Password" button
+3. Enter the Current password into the "Current Password" field
+4. Enter the New Password into the "New Password" field
+5. Enter the New Password into the "Confirm Password" field
+6. Click the "Save" button
+7. Log out
+8. Log in with new Password
+
+Expected result:
+1. I see the "Orders" button
+2. I see the "Log out" button
+3. I see the "Hi + firstName" message
+
+PostConditions:
+1. Log out
+
+
+# 003 Add Freediving Fins to wishlist
+
+Preconditions:
+1. Log in
+
+Steps:
+1. Hover over "Products" menu
+2. Hover over Freediving -> Freediving Fins
+3. Click on the Freediving Fins
+4. Click on the "Razor Polygon"
+5. CLick on the "Add to Favorites" button
+6. Open My Account page
+7. Click on the "Wishlist" menu item
+
+Expected result:
+1. I see the "You currently have 1 items in your wishlist" message
+2. I see the "Remove" button
+
+PostConditions:
+1. Remove all goods from wishlist
+2. Log out
+
+# 004 Find the product via the Search
+
+Preconditions:
+1. Log in
+
+Steps:
+1. Click on the Search field
+2. Enter the Name of product into the Search field
+3. Click the "View all results" button
+4. Click the "Filters" button
+5. Click the "Clear all"
+6. Select the "Orange" color
+7. Click the "Show int result" button
+
+Expected result:
+1. I see 1 product in the list
+
+PostConditions:
+1. Log out
+
+# 005 Delete Account
+
+Preconditions:
+1. Log in
+
+Steps:
+1. Click on the "Account Information" menu item
+2. Click the "Delete my account"
+3. Click the "Delete Account" in the "Delete Account" pop-up
+
+Expected result:
+1. The User is logged out
+2. I see "Sign In" pop-up
