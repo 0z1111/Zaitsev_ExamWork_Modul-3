@@ -1,35 +1,20 @@
 package org.pages;
 
 import org.apache.log4j.Logger;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.utils.ConfigProvider;
 
 import java.time.Duration;
-import java.time.LocalDate;
-import java.time.format.TextStyle;
-import java.util.Locale;
 
 public class ActionWithElements {
     protected WebDriver webDriver;
     protected WebDriverWait webDriverWait10, webDriverWait15;
     Logger logger = Logger.getLogger(getClass());
-
-    @FindBy (xpath = "//input[@name='datepicker_date_of_birth']")
-    private WebElement dateOfBirthInput;
-
-    @FindBy(xpath = "//select[@class='react-datepicker__year-select']")
-    private WebElement yearOfBirthDropdown;
-
-    @FindBy(xpath = "//select[@class='react-datepicker__month-select']")
-    private WebElement monthOfBirthDropdown;
-
 
     public ActionWithElements(WebDriver webDriver) {
         this.webDriver = webDriver;
@@ -92,26 +77,4 @@ public class ActionWithElements {
             return "";
         }
     }
-
-    public void pickDate(LocalDate date) {
-
-        dateOfBirthInput.click();
-
-        WebDriverWait wait = webDriverWait10;
-
-        WebElement yearSelectEl = wait.until(ExpectedConditions.visibilityOf(yearOfBirthDropdown));
-        Select yearSelect = new Select(yearSelectEl);
-        yearSelect.selectByVisibleText(String.valueOf(date.getYear()));
-
-        WebElement monthSelectEl = wait.until(ExpectedConditions.visibilityOf(monthOfBirthDropdown));
-        Select monthSelect = new Select(monthSelectEl);
-        String monthText = date.getMonth().getDisplayName(TextStyle.FULL, Locale.ENGLISH);
-        monthSelect.selectByVisibleText(monthText);
-
-        String day = String.valueOf(date.getDayOfMonth());
-        By dayCell = By.xpath("//td[not(contains(@class,'old')) and not(contains(@class,'new')) and normalize-space()='" + day + "']");
-
-        wait.until(ExpectedConditions.elementToBeClickable(dayCell)).click();
-    }
-
 }

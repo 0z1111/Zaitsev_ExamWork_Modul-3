@@ -16,4 +16,7 @@ public class PageProvider {
     public HeaderElement getHeaderElement(){
         return new HeaderElement(webDriver);
     }
+    public MyProfilePage getMyProfilePage(){
+        return new MyProfilePage(webDriver);
+    }
 }
