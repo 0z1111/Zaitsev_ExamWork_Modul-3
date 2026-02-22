@@ -73,6 +73,9 @@ public class HomePage extends ParentPage {
     @FindBy(xpath = "//input[@type='email']")
     private WebElement emailInput;
 
+    @FindBy (xpath = "//button[@type='submit']")
+    private WebElement signInButtonInSignInPopup;
+
     public HomePage(WebDriver webDriver) {
         super(webDriver);
     }
@@ -88,13 +91,20 @@ public class HomePage extends ParentPage {
     }
 
     public HomePage openHomePage() {
-        try {
-            webDriver.get(baseURL);
-            logger.info("Home page was opened");
-        } catch (Exception e) {
-            logger.error("Can not open Home page");
-        }
+        webDriver.get(baseURL);
+        logger.info("Home page was opened");
+        acceptCookiesIfPresent();
         return this;
+    }
+
+    public MyProfilePage login(String email, String password) {
+        openHomePage();
+        getHeaderElement().clickOnMyProfile();
+        checkIsSignInPopupDisplayed();
+        submitEmailInSignInPopup(email);
+        submitPasswordInSignInPopup(password);
+
+        return new MyProfilePage(webDriver);
     }
 
     public void acceptCookiesIfPresent() {
@@ -106,12 +116,22 @@ public class HomePage extends ParentPage {
         }
     }
 
-    public void submitEmailInSignInPopup(String email) {
+    public HomePage submitEmailInSignInPopup(String email) {
         clearAndEnterTextIntoElement(emailInput, email);
         logger.info(email + " was inputted in Sign In popup");
         clickOnElement(continueButtonInSignInPopup);
         logger.info("Continue button was clicked in Sign In popup");
+        return this;
     }
+
+    public HomePage submitPasswordInSignInPopup(String password) {
+        clearAndEnterTextIntoElement(passwordInput, password);
+        logger.info(password + " was inputted in Sign In popup");
+        clickOnElement(signInButtonInSignInPopup);
+        logger.info("SignIn button was clicked in Sign In popup");
+        return this;
+    }
+
 
     public boolean checkIsSignInPopupDisplayed() {
         Assert.assertTrue("Sign In popup is not displayed", isElementDisplayed(signInPopup));
