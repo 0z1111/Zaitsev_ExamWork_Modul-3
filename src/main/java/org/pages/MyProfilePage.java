@@ -2,10 +2,13 @@ package org.pages;
 
 import org.data.TestData;
 import org.junit.Assert;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+
+import java.util.List;
 
 public class MyProfilePage extends ParentPage{
     public MyProfilePage(WebDriver webDriver) {
@@ -44,6 +47,9 @@ public class MyProfilePage extends ParentPage{
 
     @FindBy (xpath = "//button[@type='submit']")
     private WebElement saveNewPasswordButton;
+
+    @FindBy(xpath = "//h1[text() = 'Wishlist']")
+    private WebElement myWishListTitle;
 
     @Override
     protected String getRelativeUrl() {
@@ -113,5 +119,46 @@ public class MyProfilePage extends ParentPage{
         clickOnElement(logOutButton);
         webDriverWait15.until(ExpectedConditions.urlToBe(baseURL));
         logger.info("User is logged out");
+    }
+    public MyProfilePage checkIsRedirectToMyWishList() {
+        Assert.assertTrue("My WishList title is not displayed", isElementDisplayed(myWishListTitle));
+        logger.info("Redirect to My WishList page was successful");
+        return this;
+    }
+
+    public void checkIsProductAddedToWishList(String productName) {
+        By productInWishList = By.xpath("//a[normalize-space()='" + productName + "']");
+
+        Assert.assertTrue(
+                "Product '" + productName + "' is not displayed in WishList",
+                isElementDisplayed(webDriver.findElement(productInWishList))
+        );
+
+        logger.info("Product '" + productName + "' is displayed in WishList");
+    }
+
+    private final By deleteFromWishListButton =
+            By.xpath("//button[contains(@aria-label,'Remove from Wishlist')]");
+
+    public void deleteAllProductsFromWishList() {
+
+        int safety = 50;
+
+        while (safety-- > 0) {
+            List<WebElement> buttons = webDriver.findElements(deleteFromWishListButton);
+            if (buttons.isEmpty()) break;
+
+            WebElement btn = buttons.get(0);
+
+            clickOnElement(btn);
+
+            webDriverWait10.until(ExpectedConditions.stalenessOf(btn));
+        }
+
+        if (safety <= 0) {
+            throw new AssertionError("deleteAllProductsFromWishList: possible infinite loop (too many items or delete doesn't work)");
+        }
+
+        logger.info("All products were deleted from WishList");
     }
 }

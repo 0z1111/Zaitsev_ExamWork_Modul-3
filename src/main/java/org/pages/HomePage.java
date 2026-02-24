@@ -2,6 +2,7 @@ package org.pages;
 
 import org.apache.log4j.Logger;
 import org.elements.HeaderElement;
+import org.elements.HeaderProduct;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -88,6 +89,10 @@ public class HomePage extends ParentPage {
 
     public HeaderElement getHeaderElement() {
         return new HeaderElement(webDriver);
+    }
+
+    public HeaderProduct getHeaderProduct() {
+        return new HeaderProduct(webDriver);
     }
 
     public HomePage openHomePage() {

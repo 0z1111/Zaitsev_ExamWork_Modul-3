@@ -2,6 +2,8 @@ package org.pages;
 
 import org.elements.HeaderElement;
 import org.openqa.selenium.WebDriver;
+import org.pages.freeDivingFins.FreedivingFinsPage;
+import org.pages.freeDivingFins.RazorPolygonPage;
 
 public class PageProvider {
     private WebDriver webDriver;
@@ -18,5 +20,11 @@ public class PageProvider {
     }
     public MyProfilePage getMyProfilePage(){
         return new MyProfilePage(webDriver);
+    }
+    public FreedivingFinsPage getFreedivingFinsPage(){
+        return new FreedivingFinsPage(webDriver);
+    }
+    public RazorPolygonPage getRazorPolygonPage(){
+        return new RazorPolygonPage(webDriver);
     }
 }
