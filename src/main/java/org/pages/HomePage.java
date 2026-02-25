@@ -4,9 +4,7 @@ import org.apache.log4j.Logger;
 import org.elements.HeaderElement;
 import org.elements.HeaderProduct;
 import org.junit.Assert;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
@@ -68,14 +66,20 @@ public class HomePage extends ParentPage {
     @FindBy(xpath = "//button[.//span[normalize-space()='Done']]")
     private WebElement doneButtonInWelcomePopup;
 
-    @FindBy (xpath = "//a[text()='Allow all cookies']")
+    @FindBy(xpath = "//a[text()='Allow all cookies']")
     private WebElement allowAllCookiesButton;
 
     @FindBy(xpath = "//input[@type='email']")
     private WebElement emailInput;
 
-    @FindBy (xpath = "//button[@type='submit']")
+    @FindBy(xpath = "//button[@type='submit']")
     private WebElement signInButtonInSignInPopup;
+
+    @FindBy(xpath = "//button[@id='searchTriggerButton']")
+    private WebElement searchOpenButton;
+
+    @FindBy(xpath = "//input[@placeholder='Search']")
+    private WebElement searchInput;
 
     public HomePage(WebDriver webDriver) {
         super(webDriver);
@@ -113,7 +117,7 @@ public class HomePage extends ParentPage {
     }
 
     public void acceptCookiesIfPresent() {
-        if (isElementDisplayed(allowAllCookiesButton)){
+        if (isElementDisplayed(allowAllCookiesButton)) {
             clickOnElement(allowAllCookiesButton);
             logger.info("Allow all cookies button was clicked");
         } else {
@@ -135,6 +139,22 @@ public class HomePage extends ParentPage {
         clickOnElement(signInButtonInSignInPopup);
         logger.info("SignIn button was clicked in Sign In popup");
         return this;
+    }
+
+
+    public SearchResultPage searchProduct(String productName) {
+
+        webDriverWait10.until(ExpectedConditions.elementToBeClickable(searchOpenButton)).click();
+        logger.info("Search button was clicked");
+
+        webDriverWait10.until(ExpectedConditions.visibilityOf(searchInput));
+        clearAndEnterTextIntoElement(searchInput, productName);
+        logger.info("" + productName + " was inputted in search field");
+
+        searchInput.sendKeys(Keys.ENTER);
+        logger.info(productName + " was searched");
+
+        return new SearchResultPage(webDriver);
     }
 
 
@@ -175,6 +195,7 @@ public class HomePage extends ParentPage {
         webDriverWait10.until(ExpectedConditions.elementToBeClickable(doneButtonInWelcomePopup));
         clickOnElement(doneButtonInWelcomePopup);
     }
+
     public void pickDate(LocalDate date) {
         WebDriverWait wait = webDriverWait10;
 
