@@ -6,7 +6,6 @@ public class TestData {
     public static final String LAST_NAME = "Zaitsev";
     public static final String MAIN_PASSWORD = "Qwerty12345";
 
-    public static final String ALREADY_REGISTERED_EMAIL = VALID_EMAIL;
     public static final String NEW_PASSWORD = "NewPassword12345";
 
 }

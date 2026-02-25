@@ -3,9 +3,7 @@ package org.pages;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.utils.ConfigProvider;
 
@@ -58,16 +56,6 @@ public class ActionWithElements {
             } else {
                 logger.info("CheckBox " + getElementName(webElement) + " is already checked");
             }
-    }
-
-    protected void selectValueInDropdown(WebElement webElement, String value) {
-        try {
-            Select seclect = new Select(webElement);
-            seclect.selectByValue(value);
-            logger.info("Value '" + value + "' was selected in DropDown " + getElementName(webElement));
-        }catch (Exception e) {
-            logger.error("Can not select value '" + value + "' in DropDown " + getElementName(webElement));
-        }
     }
 
     protected String getElementName(WebElement webElement){

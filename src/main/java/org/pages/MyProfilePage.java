@@ -11,6 +11,13 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import java.util.List;
 
 public class MyProfilePage extends ParentPage{
+
+    @FindBy (xpath = "//button[.//span[text()='Delete my account']]")
+    private WebElement deleteMyAccountButton;
+
+    @FindBy (xpath = "//button[@priority='normal' and @role='button']")
+    private WebElement deleteMyAccountButtonInPopup;
+
     public MyProfilePage(WebDriver webDriver) {
         super(webDriver);
     }
@@ -160,5 +167,12 @@ public class MyProfilePage extends ParentPage{
         }
 
         logger.info("All products were deleted from WishList");
+    }
+
+    public HomePage clickOnDeleteAccountButton() {
+        clickOnElement(deleteMyAccountButton);
+            webDriverWait10.until(ExpectedConditions.visibilityOf(deleteMyAccountButtonInPopup)).click();
+            logger.info("Delete my account button was clicked in popup");
+            return new HomePage(webDriver);
     }
 }

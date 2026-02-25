@@ -6,7 +6,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.pages.ParentPage;
 
 public class RazorPolygonPage extends ParentPage {
@@ -54,25 +53,6 @@ public class RazorPolygonPage extends ParentPage {
             logger.info("Product added to wishlist");
         } else {
             logger.info("Product already in wishlist");
-        }
-
-        return this;
-    }
-
-    public RazorPolygonPage removeFromWishlist() {
-
-        if (isInWishlist()) {
-            clickOnElement(webDriver.findElement(wishlistButton));
-
-            webDriverWait10.until(driver ->
-                    driver.findElement(wishlistButton)
-                            .getAttribute("aria-label")
-                            .contains("Add to Favorites")
-            );
-
-            logger.info("Product removed from wishlist");
-        } else {
-            logger.info("Product already not in wishlist");
         }
 
         return this;

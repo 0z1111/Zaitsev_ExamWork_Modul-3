@@ -27,7 +27,4 @@ public class PageProvider {
     public RazorPolygonPage getRazorPolygonPage(){
         return new RazorPolygonPage(webDriver);
     }
-    public SearchResultPage getSearchResultPage() {
-        return new SearchResultPage(webDriver);
-    }
 }

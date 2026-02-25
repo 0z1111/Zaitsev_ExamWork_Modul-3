@@ -4,13 +4,14 @@ import org.apache.log4j.Logger;
 import org.elements.HeaderElement;
 import org.elements.HeaderProduct;
 import org.junit.Assert;
-import org.openqa.selenium.*;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.awt.*;
 import java.time.LocalDate;
 import java.time.format.TextStyle;
 import java.util.Locale;
@@ -197,23 +198,18 @@ public class HomePage extends ParentPage {
     }
 
     public void pickDate(LocalDate date) {
-        WebDriverWait wait = webDriverWait10;
 
-        // 1) открыть календарь кликом по label (она перекрывает input)
-        wait.until(ExpectedConditions.visibilityOf(dateOfBirthInput));
-        wait.until(ExpectedConditions.elementToBeClickable(dateOfBirthLabel)).click();
+        webDriverWait10.until(ExpectedConditions.visibilityOf(dateOfBirthInput));
+        webDriverWait10.until(ExpectedConditions.elementToBeClickable(dateOfBirthLabel)).click();
 
-        // 2) выбрать год
-        WebElement yearSelectEl = wait.until(ExpectedConditions.visibilityOf(yearOfBirthDropdown));
+        WebElement yearSelectEl = webDriverWait10.until(ExpectedConditions.visibilityOf(yearOfBirthDropdown));
         new Select(yearSelectEl).selectByVisibleText(String.valueOf(date.getYear()));
 
-        // 3) выбрать месяц
-        WebElement monthSelectEl = wait.until(ExpectedConditions.visibilityOf(monthOfBirthDropdown));
+        WebElement monthSelectEl = webDriverWait10.until(ExpectedConditions.visibilityOf(monthOfBirthDropdown));
         String monthText = date.getMonth().getDisplayName(TextStyle.FULL, Locale.ENGLISH);
         new Select(monthSelectEl).selectByVisibleText(monthText);
 
-        // 4) выбрать день (react-datepicker)
-        String day2 = String.format("%02d", date.getDayOfMonth()); // 01..31
+        String day2 = String.format("%02d", date.getDayOfMonth());
 
         By dayCell = By.xpath(
                 "//div[contains(@class,'react-datepicker__day') " +
@@ -222,9 +218,8 @@ public class HomePage extends ParentPage {
                         "and not(contains(@class,'--disabled'))]"
         );
 
-        wait.until(ExpectedConditions.elementToBeClickable(dayCell)).click();
+        webDriverWait10.until(ExpectedConditions.elementToBeClickable(dayCell)).click();
 
-        // 5) дождаться, что значение появилось в input
-        wait.until(driver -> !dateOfBirthInput.getAttribute("value").trim().isEmpty());
+        webDriverWait10.until(driver -> !dateOfBirthInput.getAttribute("value").trim().isEmpty());
     }
 }
